@@ -41,7 +41,7 @@ func NewServer(cfg *config.Config, log *logger.Logger) *Server {
 }
 
 func (s *Server) Start() error {
-	s.log.Info("Сервер запущен", "port", s.cfg.Server.Port)
+	s.log.Info("Сервер запущен успешно", "port", s.cfg.Server.Port)
 	return s.server.ListenAndServe()
 }
 
