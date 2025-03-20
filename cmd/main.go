@@ -9,6 +9,7 @@ import (
 	"github.com/NTolka/project-start-of-work/internal/api/http"
 	"github.com/NTolka/project-start-of-work/internal/config"
 	"github.com/NTolka/project-start-of-work/internal/logger"
+	"github.com/NTolka/project-start-of-work/internal/repository"
 	"github.com/joho/godotenv"
 )
 
@@ -28,8 +29,21 @@ func main() {
 	// Инициализация логгера
 	log := logger.New(slog.Level(cfg.LogLevel)) // Преобразуем LogLevel в slog.Level
 
+	// Инициализация репозитория
+	repo, err := repository.NewRepository(
+		cfg.Database.Host,
+		cfg.Database.Port,
+		cfg.Database.User,
+		cfg.Database.Password,
+		cfg.Database.Name,
+	)
+	if err != nil {
+		log.Error("Ошибка подключения к базе данных", "error", err)
+		os.Exit(1)
+	}
+
 	// Инициализация и запуск HTTP-сервера
-	server := http.NewServer(cfg, log)
+	server := http.NewServer(cfg, log, repo)
 	go func() {
 		if err := server.Start(); err != nil {
 			log.Error("Ошибка при запуске сервера", "error", err)

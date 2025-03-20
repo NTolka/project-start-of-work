@@ -8,24 +8,23 @@ import (
 
 	"github.com/NTolka/project-start-of-work/internal/config"
 	"github.com/NTolka/project-start-of-work/internal/logger"
-	"github.com/NTolka/project-start-of-work/internal/usecase"
-
 	"github.com/NTolka/project-start-of-work/internal/repository"
+	"github.com/NTolka/project-start-of-work/internal/usecase"
 )
 
 type Server struct {
 	cfg    *config.Config
 	log    *logger.Logger
+	repo   *repository.Repository
 	server *http.Server
 }
 
-func NewServer(cfg *config.Config, log *logger.Logger) *Server {
-	// Инициализация репозитория и usecase
-	repo := repository.NewRepository()
+func NewServer(cfg *config.Config, log *logger.Logger, repo *repository.Repository) *Server {
+	// Инициализация usecase
 	service := usecase.NewService(repo, log)
 
 	// Инициализация роутера
-	router := NewRouters(service, log.Logger)
+	router := NewRouters(repo, service, log.Logger)
 
 	return &Server{
 		cfg: cfg,
@@ -41,7 +40,7 @@ func NewServer(cfg *config.Config, log *logger.Logger) *Server {
 }
 
 func (s *Server) Start() error {
-	s.log.Info("Сервер запущен успешно", "port", s.cfg.Server.Port)
+	s.log.Logger.Info("Сервер запущен успешно", "port", s.cfg.Server.Port)
 	return s.server.ListenAndServe()
 }
 
