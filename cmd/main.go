@@ -9,9 +9,15 @@ import (
 	"github.com/NTolka/project-start-of-work/internal/api/http"
 	"github.com/NTolka/project-start-of-work/internal/config"
 	"github.com/NTolka/project-start-of-work/internal/logger"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Загрузка переменных окружения из файла .env
+	if err := godotenv.Load(); err != nil {
+		slog.Info("Файл .env не найден, используются переменные окружения системы")
+	}
+
 	// Загрузка конфигурации
 	cfg, err := config.Load()
 	if err != nil {
