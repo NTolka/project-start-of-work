@@ -4,17 +4,19 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/NTolka/project-start-of-work/internal/repository"
 	"github.com/NTolka/project-start-of-work/internal/usecase"
 )
 
 type Handler struct {
-	service *usecase.Service
+	repo    *repository.Repository
+	usecase *usecase.Usecase
 	logger  *slog.Logger
 }
 
-func NewHandler(service *usecase.Service, logger *slog.Logger) *Handler {
+func NewHandler(usecase *usecase.Usecase, logger *slog.Logger) *Handler {
 	return &Handler{
-		service: service,
+		usecase: usecase,
 		logger:  logger,
 	}
 }
