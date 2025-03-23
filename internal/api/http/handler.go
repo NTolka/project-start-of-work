@@ -10,14 +10,13 @@ import (
 
 type Handler struct {
 	repo    *repository.Repository
-	service *usecase.Service
+	usecase *usecase.Usecase
 	logger  *slog.Logger
 }
 
-func NewHandler(repo *repository.Repository, service *usecase.Service, logger *slog.Logger) *Handler {
+func NewHandler(usecase *usecase.Usecase, logger *slog.Logger) *Handler {
 	return &Handler{
-		repo:    repo,
-		service: service,
+		usecase: usecase,
 		logger:  logger,
 	}
 }

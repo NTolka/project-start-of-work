@@ -24,7 +24,7 @@ func NewServer(cfg *config.Config, log *logger.Logger, repo *repository.Reposito
 	service := usecase.NewService(repo, log)
 
 	// Инициализация роутера
-	router := NewRouters(repo, service, log.Logger)
+	router := NewRouters(service, log.Logger)
 
 	return &Server{
 		cfg: cfg,
