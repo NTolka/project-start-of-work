@@ -5,13 +5,13 @@ import (
 	"github.com/NTolka/project-start-of-work/internal/repository"
 )
 
-type Service struct {
+type Usecase struct {
 	repo *repository.Repository
 	log  *logger.Logger
 }
 
-func NewService(repo *repository.Repository, log *logger.Logger) *Service {
-	return &Service{
+func NewService(repo *repository.Repository, log *logger.Logger) *Usecase {
+	return &Usecase{
 		repo: repo,
 		log:  log,
 	}

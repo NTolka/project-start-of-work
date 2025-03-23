@@ -37,6 +37,13 @@ type Config struct {
 		IdleTimeout  time.Duration `long:"idle-timeout" env:"IDLE_TIMEOUT" default:"60s" description:"Таймаут простоя"`
 	} `group:"server" namespace:"server" env-namespace:"SERVER"`
 	LogLevel LogLevel `long:"log-level" env:"LOG_LEVEL" default:"info" description:"Уровень логирования (debug, info, warn, error)"`
+	Database struct {
+		Host     string `long:"db-host" env:"DB_HOST" default:"localhost" description:"Хост базы данных"`
+		Port     string `long:"db-port" env:"DB_PORT" default:"5432" description:"Порт базы данных"`
+		User     string `long:"db-user" env:"DB_USER" default:"user" description:"Пользователь базы данных"`
+		Password string `long:"db-password" env:"DB_PASSWORD" default:"password" description:"Пароль базы данных"`
+		Name     string `long:"db-name" env:"DB_NAME" default:"mydb" description:"Имя базы данных"`
+	} `group:"database" namespace:"database" env-namespace:"DB"`
 }
 
 func Load() (*Config, error) {
